@@ -1,8 +1,10 @@
 
-export default function Home() {
+const Home:React.FC=()=> {
   return (
     <div>
-      Home Page
+      HOME
     </div>
   )
 }
+
+export default Home
