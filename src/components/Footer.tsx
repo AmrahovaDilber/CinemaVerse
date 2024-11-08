@@ -84,8 +84,10 @@ const Footer: React.FC = () => {
           </li>
         </ul>
 
-              <div className="flex flex-col items-start gap-4">
-                <button className="bg-[#e8ab29] hover:bg-[#bc8b22] text-[#1a1a1a] cursor-pointer text-[16px] font-semibold py-2 w-[180px] rounded-lg">Sign in for more access</button>
+        <div className="flex flex-col items-start gap-4">
+          <button className="bg-[#e8ab29] hover:bg-[#bc8b22] text-[#1a1a1a] cursor-pointer text-[16px] font-semibold py-2 w-[180px] rounded-lg">
+            Sign in for more access
+          </button>
           <p className="font-semibold text-[#fff] text-[20px] ">
             Social Medias
           </p>
