@@ -20,12 +20,11 @@ const Header: React.FC = () => {
         <div className="flex gap-[40px]">
           <div>
             <p>WatchList</p>
-                  </div>
-                  <div className="flex items-center gap-[5px]">
-                      <IoPersonSharp />
-                      <p>Sign In</p>
-                  </div>
-
+          </div>
+          <div className="flex items-center gap-[5px]">
+            <IoPersonSharp />
+            <p>Sign In</p>
+          </div>
         </div>
       </div>
     </div>
