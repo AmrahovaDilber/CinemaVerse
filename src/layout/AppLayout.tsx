@@ -9,7 +9,7 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       </header>
 
      
-      <main className="flex-1 bg-[#0b0b0b] ">
+      <main className="flex-1 bg-[#0b0b0b]  flex-col ">
         {children}
       </main>
     </div>
