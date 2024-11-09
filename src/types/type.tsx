@@ -24,14 +24,27 @@ export type movieDetailType = {
 };
 
 export type castType = {
-  cast_id: number;
+  id: number;
   character: string;
   name: string;
   profile_path: string;
 };
 
 export type crewType = {
+  id: number;
   profile_path: string;
   name: string;
   job: string;
+};
+
+export type personType = {
+  also_known_as: string[];
+  biography: string;
+  birthday: string | null;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  place_of_birth: string | null;
+  profile_path: string | null;
 };

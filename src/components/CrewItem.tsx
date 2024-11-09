@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom";
 import { crewType } from "../types/type";
 
 const CrewItem: React.FC<{ crewItem: crewType }> = ({ crewItem }) => {
   return (
-    <div className="flex items-center space-x-4 py-3 border-b border-r border-gray-200">
+    <Link to={`/person/${crewItem.id}`} className="cursor-pointer">
+      <div className="flex items-center space-x-4 py-3 border-b border-r border-gray-200">
       <div className="w-16 h-16 rounded-full overflow-hidden border border-gray-300">
         <img
           src={`https://image.tmdb.org/t/p/w500${crewItem.profile_path}`}
@@ -15,6 +17,8 @@ const CrewItem: React.FC<{ crewItem: crewType }> = ({ crewItem }) => {
         <p className="text-sm text-gray-600">{crewItem.job}</p>
       </div>
     </div>
+    </Link>
+    
   );
 };
 

@@ -31,7 +31,7 @@ const Popular = () => {
   return (
     <div>
       <Title>Popular</Title>
-      <div className="flex flex-col max-w-[1200px] mx-auto w-full relative">
+      <div className="flex flex-col max-w-[1200px] mx-auto w-full pb-[100px] relative">
         <div className="grid grid-cols-5 gap-[20px]">
           {popularMovies
             .slice(currentIndex, currentIndex + 5)

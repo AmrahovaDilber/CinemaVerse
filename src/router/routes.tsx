@@ -5,6 +5,7 @@ import About from "../pages/About";
 import { routeType } from "../types/type";
 import MovieDetailsPage from "../pages/MovieDetailsPage";
 import CastCrewPage from "../pages/CastCrewPage";
+import PersonPage from "../pages/PersonPage";
 
 type ARR = {
   routes: routeType[];
@@ -29,6 +30,11 @@ const routes: routeType[] = [
   {
     path: "/castcrew/:slug", 
     element: <CastCrewPage/>,
+    layout: "App",
+  },
+  {
+    path: "/person/:slug", 
+    element: <PersonPage></PersonPage>,
     layout: "App",
   },
 ];
