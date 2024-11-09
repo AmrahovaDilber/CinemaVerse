@@ -1,11 +1,30 @@
 export type routeType = {
-    path: string;
-    element: JSX.Element;
-    layout?: "App"; 
+  path: string;
+  element: JSX.Element;
+  layout?: "App";
 };
-  
+
 export type movieType = {
-  original_title: string,
-  vote_average: number,
-  poster_path:string
-}
+  id: number;
+  original_title: string;
+  vote_average: number;
+  poster_path: string;
+};
+
+export type movieDetailType = {
+  original_title: string;
+  backdrop_path: string;
+  vote_average: number;
+  vote_count: number;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  overview: string;
+};
+
+export type castType = {
+  cast_id: number;
+  character: string;
+  name: string;
+  profile_path: string;
+};

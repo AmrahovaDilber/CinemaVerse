@@ -1,13 +1,16 @@
 import { FaStar } from "react-icons/fa";
 import { CiBookmarkPlus } from "react-icons/ci";
 import { movieType } from "../types/type";
+import { Link } from "react-router-dom";
 
 type MovieCardProps = {
   movie: movieType;
 };
+
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   return (
-    <div className="relative w-full  rounded-lg shadow-lg overflow-hidden bg-[#1a1a1a]">
+    
+    <Link  to={`/moviedetails/${movie.id}`} className="relative w-full  rounded-lg shadow-lg overflow-hidden bg-[#1a1a1a]">
       <figure className="relative h-[300px] overflow-hidden rounded-t-lg">
         <a href="#" className="inset-0 absolute "></a>
         <img
@@ -33,7 +36,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
           {movie.original_title}
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
 

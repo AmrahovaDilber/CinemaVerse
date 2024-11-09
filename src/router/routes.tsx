@@ -2,8 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import AppLayout from "../layout/AppLayout";
 import Home from "../pages/Home";
 import About from "../pages/About";
-import MovieDetails from "../pages/MovieDetails";
 import { routeType } from "../types/type";
+import MovieDetailsPage from "../pages/MovieDetailsPage";
 
 type ARR = {
   routes: routeType[];
@@ -21,8 +21,8 @@ const routes: routeType[] = [
     layout: "App",
   },
   {
-    path: "moviedetails",
-    element: <MovieDetails></MovieDetails>,
+    path: "/moviedetails/:slug", 
+    element: <MovieDetailsPage />,
     layout: "App",
   },
 ];

@@ -1,4 +1,5 @@
 import Hero from "../components/Hero";
+import Popular from "../components/Popular";
 import Trending from "../components/Trending";
 
 const Home: React.FC = () => {
@@ -6,6 +7,7 @@ const Home: React.FC = () => {
     <div>
       <Hero></Hero>
       <Trending></Trending>
+      <Popular></Popular>
     </div>
   );
 };
