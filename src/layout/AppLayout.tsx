@@ -1,10 +1,12 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import BackToTop from "../components/BackToTop";
 
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div className="h-screen flex flex-col">
+      <BackToTop></BackToTop>
       <header>
         <Header />
       </header>
