@@ -14,9 +14,10 @@ export type movieType = {
 export type movieDetailType = {
   original_title: string;
   backdrop_path: string;
-  vote_average: number;
   vote_count: number;
+  vote_average: number;
   popularity: number;
+
   poster_path: string;
   release_date: string;
   overview: string;
@@ -27,4 +28,10 @@ export type castType = {
   character: string;
   name: string;
   profile_path: string;
+};
+
+export type crewType = {
+  profile_path: string;
+  name: string;
+  job: string;
 };

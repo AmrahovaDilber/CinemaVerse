@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import { castType } from "../types/type";
+import { castType, movieDetailType } from "../types/type";
 import CastItem from "./CastItem";
-import Title from "./Title";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
-const CastList: React.FC<{ slug: number }> = ({ slug }) => {
+import { Link } from "react-router-dom";
+interface CastListProps {
+    slug: number;
+    movieDetails: movieDetailType;
+  }
+  
+const CastList: React.FC<CastListProps> = ({ slug }) => {
   const [castItems, setCastItems] = useState<castType[]>([]);
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   useEffect(() => {
     const fetchCastItems = async () => {
@@ -30,35 +33,19 @@ const CastList: React.FC<{ slug: number }> = ({ slug }) => {
     fetchCastItems();
   }, [slug]);
 
-  function handlePrev() {
-    setCurrentIndex((prevIndex) => Math.max(0, prevIndex - 6));
-  }
-
-  function handleNext() {
-    setCurrentIndex((prevIndex) => Math.min(castItems.length - 6, prevIndex + 6));
-  }
-
   return (
     <div className="w-full py-[100px] max-w-[1200px] mx-auto relative">
-      <div className="absolute left-0 top-[55%] z-20 text-[30px] text-[#fff] flex justify-between items-center w-[1200px]">
-        <div
-          onClick={handlePrev}
-          className="border w-[40px] h-[54px] border-[#fff] text-[28px] hover:text-[#e8ab29] flex justify-center items-center cursor-pointer"
-        >
-          <FaChevronLeft />
-        </div>
-
-        <div
-          onClick={handleNext}
-          className="border w-[40px] h-[54px] border-[#fff] text-[28px] hover:text-[#e8ab29] flex justify-center items-center cursor-pointer"
-        >
-          <FaChevronRight />
-        </div>
+      <div className="flex justify-between items-center mb-12">
+        <p className="text-[#e8ab29] text-[40px] font-semibold ">
+          Cast Of The Film
+        </p>
+        <Link to={`/castcrew/${slug}`} className="text-[#e8ab29] text-[20px] font-semibold">
+          Full Cast & Crew
+        </Link>
       </div>
 
-      <Title>Cast of the film</Title>
       <div className="grid grid-cols-6 gap-4">
-        {castItems.slice(currentIndex, currentIndex + 6).map((castItem) => (
+        {castItems.slice(0, 6).map((castItem) => (
           <CastItem key={castItem.cast_id} castItem={castItem} />
         ))}
       </div>

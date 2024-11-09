@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
-import MovieDetails from "../components/MovieDetails";
-import CastList from "../components/CastList";
+import FullCastCrew from "../components/FullCastCrew";
 import { useEffect, useState } from "react";
 import { movieDetailType } from "../types/type";
 
-const MovieDetailsPage: React.FC = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const [movieDetails, setMovieDetails] = useState<movieDetailType[]>([]);
+const CastCrewPage: React.FC = () => {
+  const [movieDetails, setMovieDetails] = useState<movieDetailType | null>(null);
+  const { slug } = useParams();
+  const movieId = slug ? parseInt(slug) : null;
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -21,23 +21,20 @@ const MovieDetailsPage: React.FC = () => {
       }
     };
 
-    if (slug) {
+    if (movieId) {
       fetchMovieDetails();
     }
-  }, [slug]);
+  }, [slug, movieId]);
 
-  const movieId = slug ? Number(slug) : NaN;
-
-  if (isNaN(movieId)) {
-    return <div>Invalid movie ID</div>;
+  if (!movieDetails || !movieId) {
+    return <div>Loading...</div>;
   }
 
   return (
-    <div>
-      <MovieDetails movieDetails={movieDetails} slug={movieId} />
-      <CastList movieDetails={movieDetails}  slug={movieId} />
+    <div className="bg-gray-100 w-full h-full">
+      <FullCastCrew movieDetails={movieDetails} slug={movieId} />
     </div>
   );
 };
 
-export default MovieDetailsPage;
+export default CastCrewPage;
