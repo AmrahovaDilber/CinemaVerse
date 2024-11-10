@@ -1,7 +1,7 @@
 import { movieDetailType } from "../types/type";
 import MovieDetailCard from "./MovieDetailCard";
 
-const MovieDetails: React.FC<{ slug: number ,movieDetails:movieDetailType}> = ({ slug,movieDetails }) => {
+const MovieDetails: React.FC<{ movieDetails:movieDetailType}> = ({ movieDetails }) => {
  
   return (
     <div>

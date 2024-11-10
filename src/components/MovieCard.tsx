@@ -10,11 +10,11 @@ type MovieCardProps = {
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   return (
     
-    <Link  to={`/moviedetails/${movie.id}`} className="relative w-full  rounded-lg shadow-lg overflow-hidden bg-[#1a1a1a]">
-      <figure className="relative h-[300px] overflow-hidden rounded-t-lg">
+    <Link  to={`/moviedetails/${movie.id}`} className=" hover:scale-105 transition-transform duration-300 ease-in-out relative w-full  rounded-lg shadow-lg overflow-hidden bg-[#1a1a1a]">
+      <figure className="relative  overflow-hidden rounded-t-lg">
         <a href="#" className="inset-0 absolute "></a>
         <img
-          className="w-full h-full object-cover"
+          className="w-full object-cover h-[270px]"
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt="Movie Poster"
         />
@@ -24,7 +24,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
         </div>
       </figure>
 
-      <div className="p-4">
+      <div className="px-4 py-2">
         <div className="flex items-center gap-2 mb-2">
           <FaStar className="text-yellow-500" />
           <span className="text-white text-[16px] font-semibold">
@@ -32,7 +32,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
           </span>
         </div>
 
-        <p className="line-clamp-2 text-white text-[18px] font-semibold leading-tight mb-2">
+        <p className="line-clamp-2 text-white text-[17px] font-medium leading-tight mb-[3px]">
           {movie.original_title}
         </p>
       </div>

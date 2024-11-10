@@ -1,10 +1,9 @@
 import {
   IoSearch,
-  IoTvOutline,
-  IoFilmOutline,
   IoBookmarkOutline,
   IoPersonSharp,
 } from "react-icons/io5";
+import Dropdown from "./Dropdown";
 
 const Header: React.FC = () => {
   return (
@@ -25,49 +24,7 @@ const Header: React.FC = () => {
         </div>
 
         <div className="flex gap-8">
-          <div className="flex flex-col relative group">
-            <div className="flex items-center gap-1 hover:text-[#e8ab29]">
-              <IoTvOutline className="text-lg" />
-              <p>TV Shows</p>
-            </div>
-
-            <div className="bg-white hidden group-hover:block text-[#1a1a1a] absolute p-3 z-20 top-[25px] w-[140px] left-0 shadow-md rounded-lg transition-opacity duration-300">
-              <p className="border-b pb-2 mb-2 font-medium text-[16px] hover:text-[#bc8b22] transition-colors duration-200 cursor-pointer">
-                Popular
-              </p>
-              <p className="border-b pb-2 mb-2 font-medium text-[16px] hover:text-[#bc8b22] transition-colors duration-200 cursor-pointer">
-                Airing Today
-              </p>
-              <p className="border-b pb-2 mb-2 font-medium text-[16px] hover:text-[#bc8b22] transition-colors duration-200 cursor-pointer">
-              On TV
-              </p>
-              <p className="font-medium text-[16px] hover:text-[#bc8b22] transition-colors duration-200 cursor-pointer">
-                Top Rated
-              </p>
-            </div>
-          </div>
-
-          <div className="flex flex-col relative group">
-            <div className="flex items-center gap-2 cursor-pointer hover:text-[#e8ab29] group-hover:text-[#ffc107] transition-colors duration-200">
-              <IoFilmOutline className="text-lg" />
-              <p className="font-semibold text-lg">Movies</p>
-            </div>
-
-            <div className="bg-white hidden group-hover:block text-[#1a1a1a] absolute p-3 z-20 top-[25px] w-[140px] left-0 shadow-md rounded-lg transition-opacity duration-300">
-              <p className="border-b pb-2 mb-2 font-medium text-[16px] hover:text-[#bc8b22] transition-colors duration-200 cursor-pointer">
-                Popular
-              </p>
-              <p className="border-b pb-2 mb-2 font-medium text-[16px] hover:text-[#bc8b22] transition-colors duration-200 cursor-pointer">
-                Now Playing
-              </p>
-              <p className="border-b pb-2 mb-2 font-medium text-[16px] hover:text-[#bc8b22] transition-colors duration-200 cursor-pointer">
-                Upcoming
-              </p>
-              <p className="font-medium text-[16px] hover:text-[#bc8b22] transition-colors duration-200 cursor-pointer">
-                Top Rated
-              </p>
-            </div>
-          </div>
+        <Dropdown></Dropdown>
 
           <div className="flex items-center gap-1 hover:text-[#e8ab29]">
             <IoBookmarkOutline className="text-lg" />

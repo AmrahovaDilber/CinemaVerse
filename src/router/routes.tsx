@@ -1,11 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import AppLayout from "../layout/AppLayout";
 import Home from "../pages/Home";
-import About from "../pages/About";
 import { routeType } from "../types/type";
 import MovieDetailsPage from "../pages/MovieDetailsPage";
 import CastCrewPage from "../pages/CastCrewPage";
 import PersonPage from "../pages/PersonPage";
+import MoviesPage from "../pages/MoviesPage";
+import { MainContextProvider } from "../context/AppContext";
 
 type ARR = {
   routes: routeType[];
@@ -18,23 +19,23 @@ const routes: routeType[] = [
     layout: "App",
   },
   {
-    path: "about",
-    element: <About></About>,
-    layout: "App",
-  },
-  {
-    path: "/moviedetails/:slug", 
+    path: "/moviedetails/:slug",
     element: <MovieDetailsPage />,
     layout: "App",
   },
   {
-    path: "/castcrew/:slug", 
-    element: <CastCrewPage/>,
+    path: "/castcrew/:slug",
+    element: <CastCrewPage />,
     layout: "App",
   },
   {
-    path: "/person/:slug", 
+    path: "/person/:slug",
     element: <PersonPage></PersonPage>,
+    layout: "App",
+  },
+  {
+    path: "/movies/:slug",
+    element: <MoviesPage></MoviesPage>,
     layout: "App",
   },
 ];
@@ -42,7 +43,12 @@ const routes: routeType[] = [
 const routerMap = (arr: ARR) => {
   return arr.routes.map((item) => {
     if (item.layout === "App") {
-      item.element = <AppLayout>{item.element}</AppLayout>;
+      item.element = (
+        <MainContextProvider>
+          {" "}
+          <AppLayout>{item.element}</AppLayout>
+        </MainContextProvider>
+      );
     }
     return item;
   });
