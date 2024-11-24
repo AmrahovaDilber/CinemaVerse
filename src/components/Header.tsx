@@ -4,6 +4,7 @@ import {
   IoPersonSharp,
 } from "react-icons/io5";
 import Dropdown from "./Dropdown";
+import { Link } from "react-router-dom";
 
 const Header: React.FC = () => {
   return (
@@ -26,14 +27,15 @@ const Header: React.FC = () => {
         <div className="flex gap-8">
         <Dropdown></Dropdown>
 
-          <div className="flex items-center gap-1 hover:text-[#e8ab29]">
+          <Link to="/watchlist" className="flex items-center gap-1 hover:text-[#e8ab29]">
             <IoBookmarkOutline className="text-lg" />
             <p>WatchList</p>
-          </div>
-          <div className="flex items-center gap-1 hover:text-[#e8ab29]">
+          </Link>
+          
+          <Link to='/signup' className="flex items-center gap-1 hover:text-[#e8ab29]">
             <IoPersonSharp className="text-lg" />
-            <p>Sign In</p>
-          </div>
+            <p>Sign up</p>
+          </Link>
         </div>
       </div>
     </div>

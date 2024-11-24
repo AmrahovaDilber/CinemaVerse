@@ -7,6 +7,9 @@ import CastCrewPage from "../pages/CastCrewPage";
 import PersonPage from "../pages/PersonPage";
 import MoviesPage from "../pages/MoviesPage";
 import { MainContextProvider } from "../context/AppContext";
+import WatchListPage from "../pages/WatchListPage";
+import SignupPage from "../pages/SignupPage";
+import LoginPage from "../pages/LoginPage";
 
 type ARR = {
   routes: routeType[];
@@ -38,18 +41,36 @@ const routes: routeType[] = [
     element: <MoviesPage></MoviesPage>,
     layout: "App",
   },
+  {
+    path: "/watchlist",
+    element: <WatchListPage></WatchListPage>,
+    layout: "App",
+  },
+  {
+    path: "/signup",
+    element: <SignupPage></SignupPage>,
+  },
+  {
+    path: "/login",
+    element: <LoginPage></LoginPage>,
+  },
 ];
 
 const routerMap = (arr: ARR) => {
   return arr.routes.map((item) => {
-    if (item.layout === "App") {
-      item.element = (
-        <MainContextProvider>
-          {" "}
-          <AppLayout>{item.element}</AppLayout>
-        </MainContextProvider>
-      );
+    if (item.layout) {
+      if (item.layout === "App") {
+        item.element = (
+          <MainContextProvider>
+            {" "}
+            <AppLayout>{item.element}</AppLayout>
+          </MainContextProvider>
+        );
+      }
+    } else {
+      item.element = <MainContextProvider>{item.element}</MainContextProvider>;
     }
+
     return item;
   });
 };

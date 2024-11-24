@@ -12,15 +12,26 @@ export type movieType = {
 };
 
 export type movieDetailType = {
+  id: number;
   original_title: string;
   backdrop_path: string;
   vote_count: number;
   vote_average: number;
   popularity: number;
-
   poster_path: string;
   release_date: string;
   overview: string;
+  tagline?: string;
+  budget?: number;
+  revenue?: number;
+  runtime?: number;
+  genres?: { id: number; name: string }[]; 
+  production_companies?: {
+    id: number;
+    name: string;
+    logo_path?: string;
+    origin_country?: string;
+  }[];
 };
 
 export type castType = {
@@ -47,4 +58,12 @@ export type personType = {
   name: string;
   place_of_birth: string | null;
   profile_path: string | null;
+};
+
+
+export type Inputs = {
+  username: string;
+  email?: string;
+  password: string;
+  rePassword?: string;
 };

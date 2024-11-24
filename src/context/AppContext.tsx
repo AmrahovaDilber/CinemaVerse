@@ -11,12 +11,14 @@ export const MainContextProvider = ({ children }: MainContextProviderProps) => {
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
   const [upComingMovies, setUpComingMovies] = useState([]);
   const [topRatedMovies, setTopRatedMovies] = useState([]);
-
   const [popularTVShows, setPopularTVShows] = useState([]);
   const [airingTodayTVShows, setAiringTodayTVShows] = useState([]);
   const [onTVShows, setOnTVShows] = useState([]);
   const [topRatedTVShows, setTopRatedTVShows] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
+  const [watchList, setWatchList] = useState<number[]>([]);
+  const [watchListMovies, setWatchListMovies] = useState([]); 
+
   const fetchMoviesOrTVShows = async (
     url: string,
     setState: React.Dispatch<React.SetStateAction<never[]>>
@@ -32,7 +34,7 @@ export const MainContextProvider = ({ children }: MainContextProviderProps) => {
     }
   };
 
-  const handleFilter: (item: string) => void = (item) => {
+  const handleFilter = (item: string) => {
     if (item === "PopularMovie") {
       setFilteredMovies(popularMovies);
     } else if (item === "Now Playing") {
@@ -51,7 +53,6 @@ export const MainContextProvider = ({ children }: MainContextProviderProps) => {
       setFilteredMovies(topRatedTVShows);
     }
   };
-  
 
   useEffect(() => {
     const apiKey = "f21a6bf3bfe42bde02aa229e67732bb8";
@@ -92,6 +93,27 @@ export const MainContextProvider = ({ children }: MainContextProviderProps) => {
     );
   }, []);
 
+  const handleAddWatchList = (id: number) => {
+    if (!watchList.includes(id)) {
+      const newWatchList = [...watchList, id];
+      setWatchList(newWatchList);
+      console.log(watchList)
+    }
+  };
+
+  const fetchWatchListMovies = async () => {
+    const apiKey = "f21a6bf3bfe42bde02aa229e67732bb8";
+    try {
+      const moviePromises = watchList.map((id) =>
+        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`).then((res) => res.json())
+      );
+      const movies = await Promise.all(moviePromises);
+      setWatchListMovies(movies); 
+    } catch (error) {
+      console.error("Error fetching watchlist movies:", error);
+    }
+  };
+
   const data = {
     popularMovies,
     nowPlayingMovies,
@@ -104,6 +126,9 @@ export const MainContextProvider = ({ children }: MainContextProviderProps) => {
     filteredMovies,
     setFilteredMovies,
     handleFilter,
+    handleAddWatchList,
+    fetchWatchListMovies, // Add this to the context
+    watchListMovies, // Add watchlist movies to the context
   };
 
   return <MainContext.Provider value={data}>{children}</MainContext.Provider>;

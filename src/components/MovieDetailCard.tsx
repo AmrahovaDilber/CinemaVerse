@@ -1,18 +1,15 @@
-import { FaStar, FaUser, FaHeart, FaRegCalendarAlt } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 import { movieDetailType } from "../types/type";
 
 const MovieDetailCard: React.FC<{ moviedetails: movieDetailType }> = ({
   moviedetails,
 }) => {
-  const formatNumber = (num: number) => {
-    return new Intl.NumberFormat("en-US").format(num);
-  };
 
   return (
     <div className=" w-full ">
       <div className=" mx-auto bg-[#1a1a1a]  shadow-2xl overflow-hidden">
         <div
-          className="w-full h-[400px] relative bg-cover bg-center"
+          className="w-full h-[350px] relative bg-cover bg-center"
           style={{
             backgroundImage: `url(https://image.tmdb.org/t/p/original${moviedetails.backdrop_path})`,
           }}
@@ -29,54 +26,69 @@ const MovieDetailCard: React.FC<{ moviedetails: movieDetailType }> = ({
             />
           </div>
 
-          <div className="w-full md:w-2/3 lg:w-3/4 text-white space-y-6">
-            <div>
-              <h1 className="text-4xl font-bold mb-2">
-                {moviedetails.original_title}
-              </h1>
+          <div className="flex flex-col w-full md:w-1/3 lg:w-3/4 sm:mt-20   text-white">
+          <div>
+            <h1 className="text-3xl font-bold mb-2">{moviedetails.original_title}</h1>
+            {moviedetails.tagline && (
+              <p className="italic text-gray-400 mb-4">"{moviedetails.tagline}"</p>
+            )}
+
+            {/* Rating */}
+            <div className="flex items-center mb-4">
+              <FaStar className="text-yellow-500 mr-2" />
+              <span className="font-semibold text-lg">{moviedetails.vote_average} / 10</span>
+              <span className="text-gray-400 ml-2">({moviedetails.vote_count} votes)</span>
             </div>
 
-            <div className="flex flex-wrap gap-4 text-sm">
-              <div className="flex items-center gap-2 bg-gray-800 px-3 py-1 rounded-full">
-                <FaStar className="text-yellow-500" />
-                <span>{moviedetails.vote_average}</span>
-                <span className="text-gray-400">
-                  ({formatNumber(moviedetails.vote_count)} votes)
-                </span>
-              </div>
-              <div className="flex items-center gap-2 bg-gray-800 px-3 py-1 rounded-full">
-                <FaRegCalendarAlt />
-                <span>{new Date(moviedetails.release_date).getFullYear()}</span>
-              </div>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-semibold mb-2">Overview</h2>
-              <p className="text-gray-300 leading-relaxed">
-                {moviedetails.overview}
+            {/* Release Date */}
+            {moviedetails.release_date && (
+              <p className="text-gray-400 mb-2">
+                Release Date: {new Date(moviedetails.release_date).toLocaleDateString()}
               </p>
-            </div>
+            )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div className="bg-gray-800 p-4 rounded-lg">
-                <p className="text-gray-400 mb-1">Popularity</p>
-                <p className="text-xl font-semibold">
-                  {moviedetails.popularity}
-                </p>
+            {/* Genres */}
+            {moviedetails.genres && (
+              <div className="flex flex-wrap gap-2 mb-4">
+                {moviedetails.genres.map((genre) => (
+                  <span
+                    key={genre.id}
+                    className="bg-gray-800 px-3 py-1 rounded-full text-sm"
+                  >
+                    {genre.name}
+                  </span>
+                ))}
               </div>
-            </div>
+            )}
 
-            <div className="flex flex-wrap gap-4 pt-4">
-              <button className="flex items-center gap-2 bg-[#e8ab29] hover:bg-[#bc8b22] transition-colors duration-300 py-2 px-6 rounded-lg font-medium">
-                <FaHeart />
-                Add to Watchlist
-              </button>
-              <button className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 transition-colors duration-300 py-2 px-6 rounded-lg font-medium">
-                <FaUser />
-                Rate Movie
-              </button>
-            </div>
+            {/* Overview */}
+              <p className="text-gray-300 mb-6">{moviedetails.overview}</p>
+           
           </div>
+
+          {/* Production Companies */}
+          {moviedetails.production_companies &&
+            moviedetails.production_companies.length > 0 && (
+              <div>
+                <h2 className="text-xl font-semibold mb-2">Production Companies:</h2>
+                <div className="flex flex-wrap gap-4">
+                  {moviedetails.production_companies.map((company) => (
+                    <div key={company.id} className="flex items-center gap-2">
+                      {company.logo_path && (
+                        <img
+                          src={`https://image.tmdb.org/t/p/w92${company.logo_path}`}
+                          alt={`${company.name} logo`}
+                          className="w-12 h-12 object-contain"
+                        />
+                      )}
+                      <span>{company.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+        </div>
+
         </div>
       </div>
     </div>
