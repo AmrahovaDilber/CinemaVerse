@@ -3,6 +3,8 @@ import MovieDetails from "../components/MovieDetails";
 import CastList from "../components/CastList";
 import { useEffect, useState } from "react";
 import { movieDetailType } from "../types/type";
+import SimilarMovies from "../components/SimilarMovies";
+import ReviewDetails from "../components/ReviewDetails";
 
 const MovieDetailsPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -33,9 +35,11 @@ const MovieDetailsPage: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="w-full h-full">
       <MovieDetails movieDetails={movieDetails} slug={movieId} />
-      <CastList movieDetails={movieDetails}  slug={movieId} />
+      <CastList movieDetails={movieDetails} slug={movieId} />
+      <SimilarMovies movieDetails={movieDetails}></SimilarMovies>
+      <ReviewDetails movieDetails={movieDetails}></ReviewDetails>
     </div>
   );
 };

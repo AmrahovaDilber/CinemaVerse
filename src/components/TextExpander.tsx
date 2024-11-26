@@ -6,7 +6,7 @@ const TextExpander: React.FC<{ children: string }> = ({ children }) => {
     const text = isExpanded ? children : `${children.split(" ").slice(0, 60).join(" ")}...`;
 
     return (
-        <div className="text-gray-700 leading-relaxed">
+        <div className=" leading-relaxed">
             <p >
                 {text}
             </p>

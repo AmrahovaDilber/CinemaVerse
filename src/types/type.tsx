@@ -67,3 +67,11 @@ export type Inputs = {
   password: string;
   rePassword?: string;
 };
+
+
+export type ReviewType = {
+  id:number,
+  author: string,
+  content: string,
+  created_at:string
+}

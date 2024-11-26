@@ -10,6 +10,7 @@ import { MainContextProvider } from "../context/AppContext";
 import WatchListPage from "../pages/WatchListPage";
 import SignupPage from "../pages/SignupPage";
 import LoginPage from "../pages/LoginPage";
+import ReviewsPage from "../pages/ReviewsPage";
 
 type ARR = {
   routes: routeType[];
@@ -47,6 +48,11 @@ const routes: routeType[] = [
     layout: "App",
   },
   {
+    path: "/allreviews/:slug",
+    element: <ReviewsPage />,
+    layout: "App",
+  },
+  {
     path: "/signup",
     element: <SignupPage></SignupPage>,
   },
@@ -62,7 +68,7 @@ const routerMap = (arr: ARR) => {
       if (item.layout === "App") {
         item.element = (
           <MainContextProvider>
-            {" "}
+         
             <AppLayout>{item.element}</AppLayout>
           </MainContextProvider>
         );

@@ -41,7 +41,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
           </span>
         </div>
 
-        <p className="line-clamp-2 text-white text-[17px] font-medium leading-tight mb-[3px]">
+        <p className="line-clamp-1 text-white text-[17px] font-medium leading-tight mb-[3px]">
           {movie.original_title}
         </p>
       </div>
