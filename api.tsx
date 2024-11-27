@@ -33,7 +33,7 @@ export const createSession = async (requestToken: string) => {
     },
     body: JSON.stringify({ request_token: requestToken }),
   });
-    
+
   return data.session_id;
 };
 
@@ -78,32 +78,34 @@ export const validateLogin = async (
   return data.success;
 };
 
-
-
 // FUNCTION FOR GETTING MOVIE TRAILER
-export const getMovieTrailers = async (movieId:number) => {
-    const data = await tmdbApi(`/movie/${movieId}/videos`);
-   console.log(data)
-    return data.results
-}
+export const getMovieTrailers = async (movieId: number) => {
+  const data = await tmdbApi(`/movie/${movieId}/videos`);
+  console.log(data);
+  return data.results;
+};
 
 export const fetchTrendingMovies = async () => {
-  const data = await tmdbApi('/trending/movie/day')
-  return data.results
-}
+  const data = await tmdbApi("/trending/movie/day");
+  return data.results;
+};
 export const fetchTrendingTvShows = async () => {
-  const data = await tmdbApi('/trending/tv/day')
-  return data.results
-}
+  const data = await tmdbApi("/trending/tv/day");
+  return data.results;
+};
 
-export const fetchSimilarMovies = async (movie_id:number) => {
-  const data = await tmdbApi(`/movie/${movie_id}/similar`)
-  console.log(data)
-  return data.results
-}
+export const fetchSimilarMovies = async (movie_id: number) => {
+  const data = await tmdbApi(`/movie/${movie_id}/similar`);
+  console.log(data);
+  return data.results;
+};
 
-export const fetchReviews = async (movie_id:number) => {
-  const data = await tmdbApi(`/movie/${movie_id}/reviews`)
-  return data.results
-}
+export const fetchReviews = async (movie_id: number) => {
+  const data = await tmdbApi(`/movie/${movie_id}/reviews`);
+  return data.results;
+};
 
+export const fetchPopularPeople = async () => {
+  const data = await tmdbApi("/person/popular");
+  return data.results;
+};

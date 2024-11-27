@@ -1,4 +1,6 @@
+import { onAuthStateChanged } from "firebase/auth";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { auth } from "../firebase/config";
 
 const MainContext = createContext();
 
@@ -17,7 +19,28 @@ export const MainContextProvider = ({ children }: MainContextProviderProps) => {
   const [topRatedTVShows, setTopRatedTVShows] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [watchList, setWatchList] = useState<number[]>([]);
-  const [watchListMovies, setWatchListMovies] = useState([]); 
+  const [watchListMovies, setWatchListMovies] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null)
+  const[userLoggedIn,setUserLoggedIn]=useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(true)
+  
+  useEffect(() => {
+    const unsubscribe=onAuthStateChanged(auth,initializeUser)
+    return unsubscribe
+  },[])
+
+
+  const initializeUser = async (user) => {
+    if (user) {
+      setCurrentUser({ ...user })
+      setUserLoggedIn(true)
+    } else {
+      setCurrentUser(null)
+      setUserLoggedIn(false)
+    }
+      setLoading(false)
+  }
+
 
   const fetchMoviesOrTVShows = async (
     url: string,
@@ -128,7 +151,8 @@ export const MainContextProvider = ({ children }: MainContextProviderProps) => {
     handleFilter,
     handleAddWatchList,
     fetchWatchListMovies, // Add this to the context
-    watchListMovies, // Add watchlist movies to the context
+    watchListMovies,
+    userLoggedIn// Add watchlist movies to the context
   };
 
   return <MainContext.Provider value={data}>{children}</MainContext.Provider>;

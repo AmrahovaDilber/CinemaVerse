@@ -36,6 +36,11 @@ const Header: React.FC = () => {
             <IoPersonSharp className="text-lg" />
             <p>Sign up</p>
           </Link>
+
+              
+          <Link to='/popularpeople' className="flex items-center gap-1 hover:text-[#e8ab29]">
+            <p>Popular</p>
+          </Link>
         </div>
       </div>
     </div>

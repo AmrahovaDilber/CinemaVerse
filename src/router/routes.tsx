@@ -11,6 +11,7 @@ import WatchListPage from "../pages/WatchListPage";
 import SignupPage from "../pages/SignupPage";
 import LoginPage from "../pages/LoginPage";
 import ReviewsPage from "../pages/ReviewsPage";
+import People from "../pages/PopularPeople";
 
 type ARR = {
   routes: routeType[];
@@ -59,6 +60,11 @@ const routes: routeType[] = [
   {
     path: "/login",
     element: <LoginPage></LoginPage>,
+  },
+  {
+    path: "/popularpeople",
+    element: <People></People>,
+    layout: "App",
   },
 ];
 

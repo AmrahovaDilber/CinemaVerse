@@ -75,3 +75,14 @@ export type ReviewType = {
   content: string,
   created_at:string
 }
+
+export type PopularPeople = {
+  id: number,
+  profile_path: string,
+  name:string
+}
+
+export type loginType = {
+  email: string,
+  password:string
+}

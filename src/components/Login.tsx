@@ -1,8 +1,13 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Inputs } from "../types/type";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useMainContext } from "../context/AppContext";
+import { doPasswordReset, doSignInWithEmailAndPassword, doSignInWithGoogle } from "../firebase/auth";
 
 const Login: React.FC = () => {
+  const { userLoggedIn } = useMainContext();
+  const [isSigningIn, setIsSigningIn] = useState(false);
   const form = useForm<Inputs>();
   const {
     register,
@@ -10,51 +15,82 @@ const Login: React.FC = () => {
     formState: { errors },
   } = form;
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+  const navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    if (!isSigningIn) {
+      setIsSigningIn(true);
+      try {
+        await doSignInWithEmailAndPassword(data.email, data.password);
+        alert("Successfully Logged In");
+        navigate("/");
+      } catch (error) {
+        console.error("Login Error:", error);
+        alert("Login failed. Please check your email and password.");
+      } finally {
+        setIsSigningIn(false);
+      }
+    }
+  };
+
+  const onGoogleSignIn = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (!isSigningIn) {
+      setIsSigningIn(true);
+      try {
+        await doSignInWithGoogle();
+        alert("Successfully signed in with Google");
+        navigate("/");
+      } catch (error) {
+        console.error("Google Sign-In Error:", error);
+        alert("Google sign-in failed.");
+      } finally {
+        setIsSigningIn(false);
+      }
+    }
+  };
+
+  const handlePasswordReset = async () => {
+    const email = form.getValues("email");
+    if (!email) {
+      alert("Please enter your email to reset the password.");
+      return;
+    }
+    try {
+      await doPasswordReset(email);
+      alert("Password reset email sent. Please check your inbox.");
+    } catch (error) {
+      console.error("Password Reset Error:", error);
+      alert("Failed to send password reset email. Please try again.");
+    }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#f9f9f9] ">
-      <div className="w-full max-w-md mx-auto p-10 bg-white rounded-lg shadow-md  transition-shadow duration-300">
-        <h2 className="font-bold text-center text-3xl py-6 text-gray-800">
-          Login
-        </h2>
+    <div className="flex items-center justify-center min-h-screen bg-[#f9f9f9]">
+      <div className="w-full max-w-md mx-auto p-10 bg-white rounded-lg shadow-md transition-shadow duration-300">
+        <h2 className="font-bold text-center text-3xl py-6 text-gray-800">Login</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div>
             <input
-              {...register("username", {
-                required: "Username is required",
-              })}
-              type="text"
-              placeholder="Username"
+              {...register("email", { required: "Email is required" })}
+              type="email"
+              placeholder="Email"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e8ab29] transition-all duration-300"
             />
-            {errors.username && (
-              <p className="text-red-600 text-sm mt-2">
-                {errors.username.message}
-              </p>
-            )}
+            {errors.email && <p className="text-red-600 text-sm mt-2">{errors.email.message}</p>}
           </div>
 
           <div>
             <input
               {...register("password", {
                 required: "Password is required",
-                minLength: {
-                  value: 6,
-                  message: "Password must be at least 6 characters",
-                },
+                minLength: { value: 6, message: "Password must be at least 6 characters" },
               })}
               type="password"
               placeholder="Password"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e8ab29] transition-all duration-300"
             />
-            {errors.password && (
-              <p className="text-red-600 text-sm mt-2">
-                {errors.password.message}
-              </p>
-            )}
+            {errors.password && <p className="text-red-600 text-sm mt-2">{errors.password.message}</p>}
           </div>
 
           <button
@@ -63,23 +99,26 @@ const Login: React.FC = () => {
           >
             Login
           </button>
+
+          <button
+            type="button"
+            onClick={onGoogleSignIn}
+            className="w-full py-3 mt-4 bg-blue-600 text-white rounded-lg shadow-sm hover:bg-blue-700 hover:shadow-md transition duration-300"
+          >
+            Sign in with Google
+          </button>
+
           <div className="flex items-center justify-between">
-            <div className="text-center mt-4">
-              <Link
-                to="/signup"
-                className="text-[#e8ab29] hover:text-[#c6901c] transition-colors duration-300"
-              >
-                Create account
-              </Link>
-            </div>
-            <div className="text-center mt-4">
-              <Link
-                to=""
-                className="text-[#e8ab29] hover:text-[#c6901c] transition-colors duration-300"
-              >
-                Reset Password
-              </Link>
-            </div>
+            <Link to="/signup" className="text-[#e8ab29] hover:text-[#c6901c] transition-colors duration-300">
+              Create account
+            </Link>
+            <button
+              type="button"
+              onClick={handlePasswordReset}
+              className="text-[#e8ab29] hover:text-[#c6901c] transition-colors duration-300"
+            >
+              Reset Password
+            </button>
           </div>
         </form>
       </div>
