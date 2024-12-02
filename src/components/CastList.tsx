@@ -1,26 +1,22 @@
 import { useEffect, useState } from "react";
-import { castType, movieDetailType } from "../types/type";
+import { castType } from "../types/type";
 import CastItem from "./CastItem";
 
 import { Link } from "react-router-dom";
+import { fetchCastItems } from "../../api";
 interface CastListProps {
-    slug: number;
-    movieDetails: movieDetailType;
-  }
-  
+  slug: number;
+}
+
 const CastList: React.FC<CastListProps> = ({ slug }) => {
   const [castItems, setCastItems] = useState<castType[]>([]);
 
   useEffect(() => {
-    const fetchCastItems = async () => {
+    const fetchCast = async () => {
       try {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/movie/${slug}/credits?api_key=f21a6bf3bfe42bde02aa229e67732bb8`
-        );
-        const data = await response.json();
-
-        if (Array.isArray(data.cast)) {
-          setCastItems(data.cast);
+        const data = await fetchCastItems(slug);
+        if (Array.isArray(data)) {
+          setCastItems(data);
         } else {
           console.error("Cast data is not an array", data);
           setCastItems([]);
@@ -30,7 +26,7 @@ const CastList: React.FC<CastListProps> = ({ slug }) => {
       }
     };
 
-    fetchCastItems();
+    fetchCast();
   }, [slug]);
 
   return (
@@ -39,7 +35,10 @@ const CastList: React.FC<CastListProps> = ({ slug }) => {
         <p className="text-[#e8ab29] text-[40px] font-semibold ">
           Cast Of The Film
         </p>
-        <Link to={`/castcrew/${slug}`} className="text-[#e8ab29] text-[20px] font-semibold">
+        <Link
+          to={`/castcrew/${slug}`}
+          className="text-[#e8ab29] text-[20px] font-semibold"
+        >
           Full Cast & Crew
         </Link>
       </div>

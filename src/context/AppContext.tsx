@@ -20,27 +20,28 @@ export const MainContextProvider = ({ children }: MainContextProviderProps) => {
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [watchList, setWatchList] = useState<number[]>([]);
   const [watchListMovies, setWatchListMovies] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null)
-  const[userLoggedIn,setUserLoggedIn]=useState<boolean>(false)
-  const [loading, setLoading] = useState<boolean>(true)
-  
-  useEffect(() => {
-    const unsubscribe=onAuthStateChanged(auth,initializeUser)
-    return unsubscribe
-  },[])
+  const [favorites, setFavorites] = useState<number[]>([]);
+  const [favoritesMovies, setFavoritesMovies] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [query, setQuery] = useState<string>("");
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, initializeUser);
+    return unsubscribe;
+  }, []);
 
   const initializeUser = async (user) => {
     if (user) {
-      setCurrentUser({ ...user })
-      setUserLoggedIn(true)
+      setCurrentUser({ ...user });
+      setUserLoggedIn(true);
     } else {
-      setCurrentUser(null)
-      setUserLoggedIn(false)
+      setCurrentUser(null);
+      setUserLoggedIn(false);
     }
-      setLoading(false)
-  }
-
+    setLoading(false);
+  };
 
   const fetchMoviesOrTVShows = async (
     url: string,
@@ -74,6 +75,12 @@ export const MainContextProvider = ({ children }: MainContextProviderProps) => {
       setFilteredMovies(onTVShows);
     } else if (item === "Top Rated Tv") {
       setFilteredMovies(topRatedTVShows);
+    } else if (query) {
+      setFilteredMovies((filteredMovies) =>
+        filteredMovies.filter((movie) =>
+          movie.original_title?.toLowerCase().includes(query.toLowerCase())
+        )
+      );
     }
   };
 
@@ -120,7 +127,7 @@ export const MainContextProvider = ({ children }: MainContextProviderProps) => {
     if (!watchList.includes(id)) {
       const newWatchList = [...watchList, id];
       setWatchList(newWatchList);
-      console.log(watchList)
+      console.log(watchList);
     }
   };
 
@@ -128,14 +135,39 @@ export const MainContextProvider = ({ children }: MainContextProviderProps) => {
     const apiKey = "f21a6bf3bfe42bde02aa229e67732bb8";
     try {
       const moviePromises = watchList.map((id) =>
-        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`).then((res) => res.json())
+        fetch(
+          `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`
+        ).then((res) => res.json())
       );
       const movies = await Promise.all(moviePromises);
-      setWatchListMovies(movies); 
+      setWatchListMovies(movies);
     } catch (error) {
       console.error("Error fetching watchlist movies:", error);
     }
   };
+
+  const handleAddFavorites = (id) => {
+    if (!favorites.includes(id)) {
+      const newFavorites = [...favorites, id];
+      setFavorites(newFavorites);
+    }
+  };
+
+  const fetchFavoritesMovies = async () => {
+    const apiKey = "f21a6bf3bfe42bde02aa229e67732bb8";
+    try {
+      const moviePromises = favorites.map((id) =>
+        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`).then(
+          (res) => res.json()
+        )
+      );
+      const movies = await Promise.all(moviePromises);
+      setFavoritesMovies(movies);
+    } catch (error) {
+      console.error("Error fetching favorites movies:", error);
+    }
+  };
+  
 
   const data = {
     popularMovies,
@@ -150,9 +182,15 @@ export const MainContextProvider = ({ children }: MainContextProviderProps) => {
     setFilteredMovies,
     handleFilter,
     handleAddWatchList,
-    fetchWatchListMovies, // Add this to the context
+    fetchWatchListMovies,
     watchListMovies,
-    userLoggedIn// Add watchlist movies to the context
+    userLoggedIn,
+    handleAddFavorites,
+    favorites,
+    favoritesMovies,
+    fetchFavoritesMovies,
+    query,
+    setQuery,
   };
 
   return <MainContext.Provider value={data}>{children}</MainContext.Provider>;

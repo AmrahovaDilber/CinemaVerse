@@ -1,59 +1,72 @@
 import { useEffect, useState } from "react";
-import Title from "./Title";
 import { movieType } from "../types/type";
 import MovieCard from "./MovieCard";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import {
+  fetchMoviesForRent,
+  fetchMoviesOnTheaters,
+  fetchPopularMovies,
+} from "../../api";
+import ActiveTab from "./ActiveTab";
 
 const Popular = () => {
   const [popularMovies, setPopularMovies] = useState<movieType[]>([]);
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [activeTab, setActiveTab] = useState<string>("Streaming");
+
   useEffect(() => {
     const fetchMovies = async () => {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/popular?api_key=f21a6bf3bfe42bde02aa229e67732bb8`
-      );
-      const data = await response.json();
-      console.log(data);
-      setPopularMovies(data.results);
+      try {
+        let movies = [];
+        if (activeTab === "Streaming") {
+          movies = await fetchPopularMovies();
+        } else if (activeTab === "In Theaters") {
+          movies = await fetchMoviesOnTheaters();
+        } else if (activeTab === "For Rent") {
+          movies = await fetchMoviesForRent();
+        }
+        setPopularMovies(movies);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      }
     };
+
     fetchMovies();
-  }, []);
-
-  function handlePrev() {
-    if (currentIndex > 0) setCurrentIndex(currentIndex - 5);
-  }
-
-  function handleNext() {
-    if (currentIndex + 5 < popularMovies.length - 1)
-      setCurrentIndex(currentIndex + 5);
-  }
+  }, [activeTab]);
 
   return (
     <div>
-      <Title>Popular</Title>
-      <div className="flex flex-col max-w-[1200px] mx-auto w-full pb-[100px] relative">
-        <div className="grid grid-cols-5 gap-[20px]">
+      <div className="flex items-center gap-6 max-w-[1200px] mx-auto mb-12">
+        <p className="text-[#e8ab29] text-[40px] font-bold tracking-wider shadow-lg drop-shadow-md">
+          Popular
+        </p>
+        <div className="flex items-center gap-3 ml-auto">
+          {["Streaming", "For Rent", "In Theaters"].map((tab) => (
+            <ActiveTab
+              tab={tab}
+              setActiveTab={setActiveTab}
+              activeTab={activeTab}
+            ></ActiveTab>
+          ))}
+        </div>
+      </div>
+      <div className="flex flex-col max-w-[1200px] mx-auto w-full  relative">
+        <Swiper
+          modules={[Navigation]}
+          navigation
+          spaceBetween={20}
+          slidesPerView={5}
+          className="w-full"
+        >
           {popularMovies
-            .slice(currentIndex, currentIndex + 5)
             .map((movie: movieType) => (
-              <MovieCard movie={movie} />
+              <SwiperSlide key={movie.id}>
+                <MovieCard movie={movie} />
+              </SwiperSlide>
             ))}
-        </div>
-        <div className="absolute left-0 top-[35%] text-[30px] text-[#fff] flex justify-between items-center w-[1200px]">
-          <div
-            onClick={handlePrev}
-            className="border w-[40px] h-[54px] border-[#fff] text-[28px] hover:text-[#e8ab29] flex justify-center items-center cursor-pointer"
-          >
-            <FaChevronLeft />
-          </div>
-
-          <div
-            onClick={handleNext}
-            className="border w-[40px] h-[54px] border-[#fff] text-[28px] hover:text-[#e8ab29] flex justify-center items-center cursor-pointer"
-          >
-            <FaChevronRight />
-          </div>
-        </div>
+        </Swiper>
       </div>
     </div>
   );

@@ -2,12 +2,17 @@ import { FaAward } from "react-icons/fa";
 import PersonalInfo from "./PersonalInfo";
 import { personType } from "../types/type";
 import PersonBiography from "./PersonBiography";
+import PersonSocialMedias from "./PersonSocialMedias";
+import PersonImages from "./PersonImages";
 
 interface PROPS {
   personInfo: personType;
 }
 
 const Person: React.FC<PROPS> = ({ personInfo }) => {
+
+
+
   return (
     <div className=" rounded-xl">
       <div className="flex flex-col lg:flex-row gap-8">
@@ -26,11 +31,14 @@ const Person: React.FC<PROPS> = ({ personInfo }) => {
 
           {/* Quick Info Cards */}
           <PersonalInfo personInfo={personInfo}></PersonalInfo>
+
+          <PersonSocialMedias id={personInfo.id}></PersonSocialMedias>
         </div>
 
         {/* Content Section */}
         <div className="lg:w-2/3">
           <PersonBiography personInfo={personInfo}></PersonBiography>
+          <PersonImages id={personInfo.id}></PersonImages>
 
           <div className="space-y-4">
             {personInfo.also_known_as?.length>0 && (

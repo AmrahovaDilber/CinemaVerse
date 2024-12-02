@@ -5,6 +5,9 @@ import { CiBookmarkPlus } from "react-icons/ci";
 import { useState } from "react";
 import VideoModal from "./VideoModal";
 import { getMovieTrailers } from "../../api";
+import { useMainContext } from "../context/AppContext";
+import MovieCompanies from "./MovieCompanies";
+import MovieDetailGenre from "./MovieDetailGenre";
 
 interface movieCard {
   moviedetails: movieDetailType;
@@ -14,16 +17,15 @@ interface movieCard {
 const MovieDetailCard: React.FC<movieCard> = ({ moviedetails }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [youtubeUrl, setYoutubeUrl] = useState<string>("");
+  const { handleAddWatchList, handleAddFavorites } = useMainContext();
 
   const handlePlayTrailer = async () => {
     try {
-      
       const trailers = await getMovieTrailers(moviedetails.id);
       const youtubeTrailer = trailers.find(
         (trailer) => trailer.site === "YouTube" && trailer.type === "Trailer"
       );
 
-    
       if (youtubeTrailer) {
         setYoutubeUrl(`https://www.youtube.com/embed/${youtubeTrailer.key}`);
         setIsModalOpen(true);
@@ -88,16 +90,9 @@ const MovieDetailCard: React.FC<movieCard> = ({ moviedetails }) => {
 
               {/* Genres */}
               {moviedetails.genres && (
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {moviedetails.genres.map((genre) => (
-                    <span
-                      key={genre.id}
-                      className="bg-gray-800 px-3 py-1 rounded-full text-sm"
-                    >
-                      {genre.name}
-                    </span>
-                  ))}
-                </div>
+                <MovieDetailGenre
+                  moviedetails={moviedetails}
+                ></MovieDetailGenre>
               )}
 
               <div className="flex items-center gap-4 my-4">
@@ -105,6 +100,7 @@ const MovieDetailCard: React.FC<movieCard> = ({ moviedetails }) => {
                 <button
                   className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full shadow hover:scale-105 transition-transform duration-300"
                   aria-label="Add to Bookmark"
+                  onClick={() => handleAddWatchList(moviedetails.id)}
                 >
                   <CiBookmarkPlus className="text-xl text-gray-600" />
                 </button>
@@ -113,6 +109,7 @@ const MovieDetailCard: React.FC<movieCard> = ({ moviedetails }) => {
                 <button
                   className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full shadow hover:scale-105 transition-transform duration-300"
                   aria-label="Add to Favorites"
+                  onClick={() => handleAddFavorites(moviedetails.id)}
                 >
                   <FaHeart className="text-xl text-gray-600" />
                 </button>
@@ -125,7 +122,6 @@ const MovieDetailCard: React.FC<movieCard> = ({ moviedetails }) => {
                   <FaPlay className="text-lg" />
                   <span className="font-semibold">Play Trailer</span>
                 </button>
-
 
                 {isModalOpen && (
                   <VideoModal
@@ -142,25 +138,7 @@ const MovieDetailCard: React.FC<movieCard> = ({ moviedetails }) => {
             {/* Production Companies */}
             {moviedetails.production_companies &&
               moviedetails.production_companies.length > 0 && (
-                <div>
-                  <h2 className="text-xl font-semibold mb-2">
-                    Production Companies:
-                  </h2>
-                  <div className="flex flex-wrap gap-4">
-                    {moviedetails.production_companies.map((company) => (
-                      <div key={company.id} className="flex items-center gap-2">
-                        {company.logo_path && (
-                          <img
-                            src={`https://image.tmdb.org/t/p/w92${company.logo_path}`}
-                            alt={`${company.name} logo`}
-                            className="w-12 h-12 object-contain"
-                          />
-                        )}
-                        <span>{company.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <MovieCompanies moviedetails={moviedetails}></MovieCompanies>
               )}
           </div>
         </div>

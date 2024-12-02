@@ -3,7 +3,7 @@ import { castType } from "../types/type";
 
 const FullCastItem: React.FC<{ castItem: castType }> = ({ castItem }) => {
   return (
-    <Link to={`/person/${castItem.id}`} className="cursor-pointer">
+    <Link to={`/person/${castItem.cast_id}`} className="cursor-pointer">
       <div className="flex items-center space-x-4 py-3 border-b border-r border-gray-200">
         <div className="w-16 h-16 rounded-full overflow-hidden border border-gray-300">
           <img

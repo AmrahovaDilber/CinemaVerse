@@ -40,7 +40,6 @@ const FullCastCrew: React.FC<FullCastCrewProps> = ({ slug, movieDetails }) => {
 
   return (
     <div className="max-w-[1200px] mx-auto px-4 py-12">
-      
       <div className="flex gap-8 mb-16 items-start">
         <img
           src={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`}
@@ -57,9 +56,7 @@ const FullCastCrew: React.FC<FullCastCrewProps> = ({ slug, movieDetails }) => {
         </div>
       </div>
 
-
       <div className="grid md:grid-cols-2 gap-24">
-        
         <div>
           <h2
             className="text-xl font-medium bg-[#1a1a1a] text-white mb-6 
@@ -85,7 +82,6 @@ const FullCastCrew: React.FC<FullCastCrewProps> = ({ slug, movieDetails }) => {
           </div>
         </div>
 
-       
         <div>
           <h2
             className="text-xl font-medium bg-[#1a1a1a] text-white mb-6 

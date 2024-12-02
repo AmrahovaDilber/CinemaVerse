@@ -2,9 +2,14 @@ import { useEffect, useState } from "react";
 import { fetchReviews } from "../../api";
 import { Link } from "react-router-dom";
 import ReviewCard from "./ReviewCard";
-import { ReviewType } from "../types/type";
+import { movieDetailType, ReviewType } from "../types/type";
 
-const ReviewDetails: React.FC = ({ movieDetails }) => {
+
+interface ReviewDetailsProps{
+  movieDetails:movieDetailType
+}
+
+const ReviewDetails: React.FC <ReviewDetailsProps>= ({ movieDetails }) => {
   const [reviews, setReviews] = useState<ReviewType[]>([]);
 
   useEffect(() => {
@@ -44,7 +49,7 @@ const ReviewDetails: React.FC = ({ movieDetails }) => {
             <ReviewCard key={review.id} review={review}></ReviewCard>
           ))
       ) : (
-        <p className="text-center text-white italic">No reviews available.</p>
+        <p className="text-center text-white italic py-[200px]">No reviews available.</p>
       )}
     </div>
   );

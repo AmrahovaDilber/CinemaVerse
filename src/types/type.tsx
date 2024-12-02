@@ -31,11 +31,14 @@ export type movieDetailType = {
     name: string;
     logo_path?: string;
     origin_country?: string;
-  }[];
+    length: number;
+    
+  };
 };
 
 export type castType = {
-  id: number;
+
+  cast_id: number;
   character: string;
   name: string;
   profile_path: string;
@@ -85,4 +88,21 @@ export type PopularPeople = {
 export type loginType = {
   email: string,
   password:string
+}
+
+export type activeTabType = {
+  tab: string,
+  setActiveTab: (tab:string) => void,
+  activeTab:string
+}
+
+export type companyType = {
+  id: number,
+  logo_path: string,
+  name:string
+}
+
+export type genreType = {
+  id: number,
+  name:string
 }

@@ -105,7 +105,83 @@ export const fetchReviews = async (movie_id: number) => {
   return data.results;
 };
 
+// API Function
 export const fetchPopularPeople = async () => {
-  const data = await tmdbApi("/person/popular");
+  const data = await tmdbApi(`/person/popular`);
   return data.results;
+};
+
+export const fetchPopularMovies = async () => {
+  const response = await fetch(
+    `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&sort_by=popularity.des`
+  );
+  if (response.ok) {
+    const data = await response.json();
+    return data.results;
+  }
+};
+
+export const fetchMoviesOnTheaters = async () => {
+  const response = await fetch(
+    `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&region=US`
+  );
+  if (response.ok) {
+    const data = await response.json();
+    return data.results;
+  }
+};
+
+export const fetchMoviesForRent = async () => {
+  const response = await fetch(
+    `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_watch_providers=337&watch_region=US`
+  );
+  if (response.ok) {
+    const data = await response.json();
+    return data.results;
+  }
+};
+
+export const fetchMovieDetails = async (slug:number) => {
+  const data = await tmdbApi(`/movie/${slug}`);
+  return data;
+};
+
+export const fetchMovieMediaDetails = async (movieId:number) => {
+  const response = await fetch(
+    `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&append_to_response=videos,images`
+  );
+  if (response.ok) {
+    const data = await response.json();
+    return data.results;
+  }
+};
+
+export const fetchPersonDetailedData = async (personId: number) => {
+  try {
+    const response = await tmdbApi(`/person/${personId}`);
+    return response;
+  } catch (error) {
+    console.error("Error fetching person data:", error);
+    throw new Error("Failed to fetch person details.");
+  }
+};
+
+export const fetchPersonPhotos = async (person_id:number) => {
+  const data = await tmdbApi(`/person/${person_id}/images`);
+  return data;
+};
+
+export const fetchPersonSocialMedias = async (person_id:number) => {
+  const data = await tmdbApi(`/person/${person_id}/external_ids`);
+  return data;
+};
+
+export const fetchTopRatedMovies = async () => {
+  const data = await tmdbApi("/movie/upcoming");
+  return data.results;
+};
+
+export const fetchCastItems = async (slug:number) => {
+  const data = await tmdbApi(`/movie/${slug}/credits`);
+  return data.cast;
 };

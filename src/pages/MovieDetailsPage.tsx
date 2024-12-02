@@ -5,18 +5,16 @@ import { useEffect, useState } from "react";
 import { movieDetailType } from "../types/type";
 import SimilarMovies from "../components/SimilarMovies";
 import ReviewDetails from "../components/ReviewDetails";
+import { fetchMovieDetails } from "../../api";
 
 const MovieDetailsPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [movieDetails, setMovieDetails] = useState<movieDetailType[]>([]);
 
   useEffect(() => {
-    const fetchMovieDetails = async () => {
+    const fetchMovieDetail = async () => {
       try {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/movie/${slug}?api_key=f21a6bf3bfe42bde02aa229e67732bb8`
-        );
-        const data = await response.json();
+        const data = await fetchMovieDetails(slug);
         setMovieDetails(data);
       } catch (error) {
         console.error("Error fetching movie details:", error);
@@ -24,7 +22,7 @@ const MovieDetailsPage: React.FC = () => {
     };
 
     if (slug) {
-      fetchMovieDetails();
+      fetchMovieDetail();
     }
   }, [slug]);
 
@@ -40,6 +38,7 @@ const MovieDetailsPage: React.FC = () => {
       <CastList movieDetails={movieDetails} slug={movieId} />
       <SimilarMovies movieDetails={movieDetails}></SimilarMovies>
       <ReviewDetails movieDetails={movieDetails}></ReviewDetails>
+      {/* <MovieMediaDetails movieDetails={movieDetails}></MovieMediaDetails> */}
     </div>
   );
 };
