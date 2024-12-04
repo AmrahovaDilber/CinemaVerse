@@ -2,9 +2,11 @@ import { IoSearch, IoPersonSharp } from "react-icons/io5";
 import Dropdown from "./Dropdown";
 import { Link } from "react-router-dom";
 import { useMainContext } from "../context/AppContext";
+import { FaArrowRightToBracket } from "react-icons/fa6";
+import { doSignOut } from "../firebase/auth";
 
 const Header: React.FC = () => {
-  const { query, setQuery } = useMainContext();
+  const { query, setQuery, userLoggedIn } = useMainContext();
   return (
     <div className="w-full bg-[#1a1a1a]">
       <div className="flex justify-between items-center max-w-[1200px] mx-auto py-5 text-[#fff]">
@@ -27,13 +29,23 @@ const Header: React.FC = () => {
         <div className="flex gap-8">
           <Dropdown></Dropdown>
 
-          <Link
-            to="/signup"
-            className="flex items-center gap-1 hover:text-[#e8ab29]"
-          >
-            <IoPersonSharp className="text-lg" />
-            <p>Sign up</p>
-          </Link>
+          {!userLoggedIn ? (
+            <Link
+              to="/signup"
+              className="flex items-center gap-1 hover:text-[#e8ab29]"
+            >
+              <IoPersonSharp className="text-lg" />
+              <p>Sign up</p>
+            </Link>
+          ) : (
+            <Link
+              to="/signup"
+              className="flex items-center gap-1 hover:text-[#e8ab29]"
+            >
+              <FaArrowRightToBracket className="text-lg" />
+              <p onClick={()=>doSignOut()}>Log Out</p>
+            </Link>
+          )}
 
           <div className="flex flex-col relative group">
             <div className="flex items-center gap-2 cursor-pointer hover:text-[#e8ab29] group-hover:text-[#ffc107] transition-colors duration-200">
@@ -59,7 +71,6 @@ const Header: React.FC = () => {
               >
                 <p>Popular People</p>
               </Link>
-            
             </div>
           </div>
         </div>

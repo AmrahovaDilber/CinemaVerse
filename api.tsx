@@ -111,16 +111,6 @@ export const fetchPopularPeople = async () => {
   return data.results;
 };
 
-export const fetchPopularMovies = async () => {
-  const response = await fetch(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&sort_by=popularity.des`
-  );
-  if (response.ok) {
-    const data = await response.json();
-    return data.results;
-  }
-};
-
 export const fetchMoviesOnTheaters = async () => {
   const response = await fetch(
     `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&region=US`
@@ -141,12 +131,12 @@ export const fetchMoviesForRent = async () => {
   }
 };
 
-export const fetchMovieDetails = async (slug:number) => {
+export const fetchMovieDetails = async (slug: number) => {
   const data = await tmdbApi(`/movie/${slug}`);
   return data;
 };
 
-export const fetchMovieMediaDetails = async (movieId:number) => {
+export const fetchMovieMediaDetails = async (movieId: number) => {
   const response = await fetch(
     `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&append_to_response=videos,images`
   );
@@ -166,12 +156,12 @@ export const fetchPersonDetailedData = async (personId: number) => {
   }
 };
 
-export const fetchPersonPhotos = async (person_id:number) => {
+export const fetchPersonPhotos = async (person_id: number) => {
   const data = await tmdbApi(`/person/${person_id}/images`);
   return data;
 };
 
-export const fetchPersonSocialMedias = async (person_id:number) => {
+export const fetchPersonSocialMedias = async (person_id: number) => {
   const data = await tmdbApi(`/person/${person_id}/external_ids`);
   return data;
 };
@@ -181,7 +171,57 @@ export const fetchTopRatedMovies = async () => {
   return data.results;
 };
 
-export const fetchCastItems = async (slug:number) => {
+export const fetchCastItems = async (slug: number) => {
   const data = await tmdbApi(`/movie/${slug}/credits`);
   return data.cast;
+};
+
+export const fetchPopularMovies = async () => {
+  const response = await fetch(
+    `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&sort_by=popularity.des`
+  );
+  if (response.ok) {
+    const data = await response.json();
+    return data.results;
+  }
+};
+
+export const fetchNowPlayingMovies = async () => {
+  const data = await tmdbApi(`/movie/now_playing`);
+  return data.results;
+};
+
+export const fetchUpComingMovies = async () => {
+  const data = await tmdbApi(`/movie/upcoming`);
+  return data.results;
+};
+
+export const fetchTopRatedMoviess = async () => {
+  const data = await tmdbApi("/movie/top_rated");
+  return data.results;
+};
+
+export const fetchPopularTvShows = async () => {
+  const data = await tmdbApi("/tv/popular");
+  return data.results;
+};
+
+export const fetchAiringTodayTVShows = async () => {
+  const data = await tmdbApi("/tv/airing_today");
+  return data.results;
+};
+
+export const fetchOnTvShows = async () => {
+  const data = await tmdbApi("/tv/on_the_air");
+  return data.results;
+};
+
+export const fetchTopRatedTvShows = async () => {
+  const data = await tmdbApi("/tv/top_rated");
+  return data.results;
+};
+
+export const fetchDailyPicks = async () => {
+  const data = await tmdbApi("/trending/movie/day");
+  return data.results;
 };

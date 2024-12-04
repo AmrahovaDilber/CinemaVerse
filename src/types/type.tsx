@@ -106,3 +106,35 @@ export type genreType = {
   id: number,
   name:string
 }
+interface Movie {
+  id: number;
+  original_title?: string;
+  name?: string;
+  [key: string]: any;
+}
+
+
+export interface MainContextType {
+  popularMovies: Movie[];
+  nowPlayingMovies: Movie[];
+  upComingMovies: Movie[];
+  topRatedMovies: Movie[];
+  popularTVShows: Movie[];
+  airingTodayTVShows: Movie[];
+  onTVShows: Movie[];
+  topRatedTVShows: Movie[];
+  handleFilter: (item: string) => void;
+  handleAddWatchList: (id: number) => Promise<void>;
+  fetchWatchListMovies: () => Promise<void>;
+  watchListMovies: Movie[];
+  userLoggedIn: boolean;
+  setUserLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  handleAddFavorites: (id: number) => void;
+  favorites: number[];
+  favoritesMovies: Movie[];
+  fetchFavoritesMovies: () => Promise<void>;
+  query: string;
+  setQuery: React.Dispatch<React.SetStateAction<string>>;
+  allMovies: Movie[];
+  filteredMovies: Movie[];
+}

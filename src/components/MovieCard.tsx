@@ -9,6 +9,7 @@ type MovieCardProps = {
 };
 type FunctionProps = {
   handleAddWatchList: (id: number) => void;
+  handleAddFavorites: (id: number) => void;
 };
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {

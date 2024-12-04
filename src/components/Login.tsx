@@ -6,7 +6,7 @@ import { useMainContext } from "../context/AppContext";
 import { doPasswordReset, doSignInWithEmailAndPassword, doSignInWithGoogle } from "../firebase/auth";
 
 const Login: React.FC = () => {
-  const { userLoggedIn } = useMainContext();
+  const { userLoggedIn,setUserLoggedIn } = useMainContext();
   const [isSigningIn, setIsSigningIn] = useState(false);
   const form = useForm<Inputs>();
   const {
@@ -23,6 +23,7 @@ const Login: React.FC = () => {
       try {
         await doSignInWithEmailAndPassword(data.email, data.password);
         alert("Successfully Logged In");
+        setUserLoggedIn(true);
         navigate("/");
       } catch (error) {
         console.error("Login Error:", error);
@@ -33,22 +34,7 @@ const Login: React.FC = () => {
     }
   };
 
-  const onGoogleSignIn = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (!isSigningIn) {
-      setIsSigningIn(true);
-      try {
-        await doSignInWithGoogle();
-        alert("Successfully signed in with Google");
-        navigate("/");
-      } catch (error) {
-        console.error("Google Sign-In Error:", error);
-        alert("Google sign-in failed.");
-      } finally {
-        setIsSigningIn(false);
-      }
-    }
-  };
+
 
   const handlePasswordReset = async () => {
     const email = form.getValues("email");
@@ -100,13 +86,7 @@ const Login: React.FC = () => {
             Login
           </button>
 
-          <button
-            type="button"
-            onClick={onGoogleSignIn}
-            className="w-full py-3 mt-4 bg-blue-600 text-white rounded-lg shadow-sm hover:bg-blue-700 hover:shadow-md transition duration-300"
-          >
-            Sign in with Google
-          </button>
+         
 
           <div className="flex items-center justify-between">
             <Link to="/signup" className="text-[#e8ab29] hover:text-[#c6901c] transition-colors duration-300">

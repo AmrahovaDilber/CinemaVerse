@@ -1,8 +1,13 @@
 // MovieMediaDetails.jsx
 import { useEffect, useState } from "react";
 import { fetchMovieMediaDetails } from "../../api";
+import { movieDetailType } from "../types/type";
 
-export default function MovieMediaDetails({ movieDetails }) {
+interface MovieDetailsProps{
+  movieDetails:movieDetailType
+}
+
+const MovieMediaDetails:React.FC<MovieDetailsProps>=({ movieDetails })=> {
   const [mediaDetails, setMediaDetails] = useState(null);
 
   useEffect(() => {
@@ -75,3 +80,5 @@ export default function MovieMediaDetails({ movieDetails }) {
     </div>
   );
 }
+
+export default MovieMediaDetails;
