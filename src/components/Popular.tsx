@@ -37,9 +37,9 @@ const Popular = () => {
   }, [activeTab]);
 
   return (
-    <div>
+    <div className="px-6 lg:px-0">
       <div className="flex items-center gap-6 max-w-[1200px] mx-auto mb-12">
-        <p className="text-[#e8ab29] text-[40px] font-bold tracking-wider shadow-lg drop-shadow-md">
+        <p className="text-[#e8ab29] text-[26px] sm:text-[30px] md:text-[40px] font-bold tracking-wider shadow-lg drop-shadow-md">
           Popular
         </p>
         <div className="flex items-center gap-3 ml-auto">
@@ -57,15 +57,24 @@ const Popular = () => {
           modules={[Navigation]}
           navigation
           spaceBetween={20}
-          slidesPerView={5}
+          breakpoints={{
+            0: {
+              slidesPerView: 2,
+            },
+            768: {
+              slidesPerView: 4,
+            },
+            1024: {
+              slidesPerView: 5,
+            },
+          }}
           className="w-full"
         >
-          {popularMovies
-            .map((movie: movieType) => (
-              <SwiperSlide key={movie.id}>
-                <MovieCard movie={movie} />
-              </SwiperSlide>
-            ))}
+          {popularMovies.map((movie: movieType) => (
+            <SwiperSlide key={movie.id}>
+              <MovieCard movie={movie} />
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </div>

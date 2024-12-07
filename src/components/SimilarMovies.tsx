@@ -19,8 +19,8 @@ const SimilarMovies: React.FC<movieDetailType> = ({ movieDetails }) => {
   }, [movieDetails.id]);
 
   return (
-    <div className="flex flex-col max-w-[1200px] mx-auto w-full relative">
-      <p className="text-[#e8ab29] mb-12 text-[40px] font-semibold">
+    <div className="flex flex-col px-6 lg:px-0 max-w-[1200px] mx-auto w-full relative">
+      <p className="text-[#e8ab29] mb-12 text-[26px] sm:text-[30px] md:text-[40px] font-semibold">
         Similar Movies
       </p>
       <div className="w-full max-w-[1200px] mx-auto">
@@ -29,7 +29,17 @@ const SimilarMovies: React.FC<movieDetailType> = ({ movieDetails }) => {
           modules={[Navigation]}
           navigation
           spaceBetween={20}
-          slidesPerView={5}
+          breakpoints={{
+            0: {
+              slidesPerView: 2,
+            },
+            768: {
+              slidesPerView: 4,
+            },
+            1024: {
+              slidesPerView: 5,
+            },
+          }}
           className="w-full"
           >
             {allSimilarMovies.map((movie, index) => (

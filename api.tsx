@@ -225,3 +225,13 @@ export const fetchDailyPicks = async () => {
   const data = await tmdbApi("/trending/movie/day");
   return data.results;
 };
+
+export const fetchComingSoonMovies = async () => {
+  const response = await fetch(
+    `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&release_date.gte=2024-12-01&release_date.lte=2024-12-31&sort_by=release_date.asc`
+  );
+  if (response.ok) {
+    const data = await response.json();
+    return data.results;
+  }
+};

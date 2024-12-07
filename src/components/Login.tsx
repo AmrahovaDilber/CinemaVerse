@@ -3,7 +3,7 @@ import { Inputs } from "../types/type";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useMainContext } from "../context/AppContext";
-import { doPasswordReset, doSignInWithEmailAndPassword, doSignInWithGoogle } from "../firebase/auth";
+import { doPasswordReset, doSignInWithEmailAndPassword } from "../firebase/auth";
 
 const Login: React.FC = () => {
   const { userLoggedIn,setUserLoggedIn } = useMainContext();

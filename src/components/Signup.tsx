@@ -2,9 +2,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Inputs } from "../types/type";
 import { Link } from "react-router-dom";
 import { doCreateUserWithEmailAndPassword } from "../firebase/auth";
+import { useMainContext } from "../context/AppContext";
 
 const Signup: React.FC = () => {
   const form = useForm<Inputs>();
+  const{currentUser,setCurrentUser}=useMainContext()
   const {
     register,
     handleSubmit,
@@ -14,6 +16,7 @@ const Signup: React.FC = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       await doCreateUserWithEmailAndPassword(data.email, data.password);
+      setCurrentUser(data)
       alert("Account created successfully!");
     } catch (error) {
       console.error("Error creating account:", error);

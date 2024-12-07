@@ -19,8 +19,8 @@ const People: React.FC = () => {
   }, []);
 
   return (
-    <div className="max-w-[1200px] mx-auto py-20">
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 p-4">
+    <div className="max-w-[1200px] mx-auto py-20 px-6 lg:px-0">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 ">
         {popularPeople?.map((person: PopularPeople) => (
           <div key={person.id} className="person-card">
             <Link to={`/person/${person.id}`} className="block text-center">

@@ -25,7 +25,7 @@ const ReviewsPage = () => {
     
     return (
         <div className="w-full h-full bg-gray-100">
-             <div className="max-w-[1200px] mx-auto py-6" >
+             <div className="max-w-[1200px] mx-auto py-6 px-6 lg:px-0" >
              {reviews.length > 0 ? (
         reviews.map((review) => (
           <div

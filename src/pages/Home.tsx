@@ -1,5 +1,4 @@
-
-import FeaturedMovie from "../components/FeauturedMovie";
+import ComingSoon from "../components/ComingSoon";
 import Hero from "../components/Hero";
 import HeroSlideshow from "../components/HeroSlideShow";
 import PersonCard from "../components/PersonCard";
@@ -16,9 +15,7 @@ const Home: React.FC = () => {
       <HeroSlideshow></HeroSlideshow>
       <PersonCard></PersonCard>
       <TopRatedMovies></TopRatedMovies>
-
-     
-
+      <ComingSoon></ComingSoon>
     </div>
   );
 };

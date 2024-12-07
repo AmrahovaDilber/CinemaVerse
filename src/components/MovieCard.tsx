@@ -45,7 +45,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
         </div>
       </figure>
 
-      <div className="px-4 py-2">
+      <div className="p-4">
         <div className="flex items-center gap-2 mb-2">
           <FaStar className="text-yellow-500" />
           <span className="text-white text-[16px] font-semibold">

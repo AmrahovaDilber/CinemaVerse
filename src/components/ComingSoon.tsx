@@ -1,30 +1,31 @@
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
+import 'swiper/css';
+import 'swiper/css/navigation';
+
 import "../index.css";
 
 import MovieCard from "./MovieCard";
-import { fetchTopRatedMovies } from "../../api";
+import { fetchComingSoonMovies } from "../../api";
 import { movieType } from "../types/type";
 
-const TopRatedMovies: React.FC = () => {
+const ComingSoon: React.FC = () => {
   const [movies, setMovies] = useState<movieType[]>([]);
 
   useEffect(() => {
     const fetchTrending = async () => {
-      const topRatedMovies = await fetchTopRatedMovies();
+      const topRatedMovies = await fetchComingSoonMovies();
       setMovies(topRatedMovies);
     };
     fetchTrending();
   }, []);
 
   return (
-    <div className="py-[80px] px-6 lg:px-0">
+    <div className="pb-[100px] px-6 lg:px-0">
       <div className="flex items-center  max-w-[1200px] mx-auto mb-12 ">
         <p className="text-[#e8ab29] text-[26px] sm:text-[30px] md:text-[40px] font-bold  tracking-wider shadow-lg drop-shadow-md">
-          Top Rated
+          Coming soon
         </p>
       </div>
 
@@ -57,4 +58,4 @@ const TopRatedMovies: React.FC = () => {
   );
 };
 
-export default TopRatedMovies;
+export default ComingSoon;

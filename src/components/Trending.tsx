@@ -34,14 +34,15 @@ const Trending: React.FC = () => {
   const listToDisplay = activeTab === "Movie" ? movies : tvShows;
 
   return (
-    <div className="py-[80px]">
-      <div className="flex items-center  max-w-[1200px] mx-auto mb-12 ">
-        <p className="text-[#e8ab29] text-[40px] font-bold tracking-wider shadow-lg drop-shadow-md">
+    <div className="py-[80px] px-6 lg:px-0">
+      <div className="flex items-center max-w-[1200px] mx-auto mb-12">
+        <p className="text-[#e8ab29] text-[26px] sm:text-[30px] md:text-[40px] font-bold tracking-wider shadow-lg drop-shadow-md">
           Trending
         </p>
         <div className="flex items-center gap-3 ml-auto">
           {["Movie", "TV Show"].map((tab) => (
             <ActiveTab
+              key={tab} 
               tab={tab}
               setActiveTab={setActiveTab}
               activeTab={activeTab}
@@ -55,7 +56,17 @@ const Trending: React.FC = () => {
           modules={[Navigation]}
           navigation
           spaceBetween={20}
-          slidesPerView={5}
+          breakpoints={{
+            0: {
+              slidesPerView: 2, 
+            },
+            768: {
+              slidesPerView: 4, 
+            },
+            1024: {
+              slidesPerView: 5, 
+            },
+          }}
           className="w-full"
         >
           {listToDisplay.map((item: movieType) => (
